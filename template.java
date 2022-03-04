@@ -12,9 +12,7 @@ public class template{ //left_brace_1
        is used to compute the Average Waiting Time for a given set of processes  */
 
         int N = 4;  // number of processes
-
         int[] Arrival_Time = new int[N];
-
         int[] Burst_Time = new int[N];
 
     /* Time Quantum and Process Priorities are not used in the Preemptive SJF 
@@ -93,11 +91,11 @@ public class template{ //left_brace_1
            is computed correctly according to the explanation on 
            page 209 of the material in Silberschatz, Galvin, and Gagne’s 
            book, their values would be:
-
+            */
            Waiting_Time[0] = 9;
            Waiting_Time[1] = 0;
            Waiting_Time[2] = 15;
-           Waiting_Time[4] = 2;   */
+           Waiting_Time[3] = 2;   
 
         for (int i = 0; i <= N - 1; i++) {
             Waiting_Time_Sum = Waiting_Time_Sum + Waiting_Time[i];
