@@ -10,7 +10,7 @@
 ## TO DO:  
 
 1. Implement system with three algorithms : 
-* (1) Preemptive Shortest-Job-First (SJF) Scheduling Algorithm, when the Arrival Time, and Burst Time are given for each process;
+* (1) Preemptive Shortest-Job-First (SJF) Scheduling Algorithm, when the Arrival Time, and Burst Time are given for each process; ( DONE )
 
 * (2) Round Robin (RR) Scheduling Algorithm. when the Arrival Time, Burst Time, and Time Quantum are given for each process;
 
@@ -18,4 +18,5 @@
 
 2. Compile all the test output to the text file ```test_output```
 
+3. Make sure all the code handle incorrect input  
 

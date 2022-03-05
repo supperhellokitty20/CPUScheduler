@@ -8,35 +8,71 @@ public class SJF {
      * */
     private int[] ArrivalTime; 
     private int[] BurstTime ; 
-    private int[] WaitingTime; 
+    private int[] WaitingTime ; 
     private int cap ; 
     //Gantt chart in the schedule 
 
-    /* Function to compute the gantt chart based on arrival and burst time of the process.  
-     * 
+    /* Compute the wait time for each process   
+     * by simulating the gantt chart in 3 arrays 
      * */ 
-    int M = 5000; 
-    int[] startTime= new int[M];
-    int[] intervalLength = new int[M];
-    int[] processIndex= new int[M];
 
-    private void computeGantt(){
-        int[] sortBurstTime = new int[cap] ;
-
-    }
     /*Compute each process waititing time 
      * */
-    public void computeWaitingTime(){
+    public void  computeWaitingTime(){
+        WaitingTime = new int[cap] ;
+        //Store the number of completed process 
+        int completed=0;  
+        int currentTime=0; 
+        //Store the remaining runtime of all the process 
+        int[] runTime= new int[this.cap];
+        for(int i=0;i<this.cap;i++){
+            runTime[i]=BurstTime[i] ;
+        }
+        int indexMin=0 ;  
+        int minRunTime = Integer.MAX_VALUE ;  
+        boolean checkedForMinProcess= false ;
+        while(completed!=cap){
+            //Find the min runTime from the array ,update based on the currentTime 
+            for(int i=0;i<this.cap;i++){
+                if(ArrivalTime[i]<=currentTime && runTime[i]<minRunTime && runTime[i]>0){
+                    minRunTime = runTime[i] ;
+                    indexMin =i ; 
+                    checkedForMinProcess =true ;
+                }               
+            }
+            if(checkedForMinProcess==false){
+                currentTime++ ; 
+                continue ; 
+            }
+            //Reduce the run time of the shortest process 
+            runTime[indexMin]--; 
+            
+            //Update minRunTime 
+            minRunTime = runTime[indexMin] ;
+            if(minRunTime==0) minRunTime = Integer.MAX_VALUE ;
 
+            //If a process get completed proceed to calculate the waiting time of the process 
+            if(runTime[indexMin]==0){
+                completed++ ; 
+                //Update the checked flag so in the next iteration ,the function will update the currentTime accordingly 
+                checkedForMinProcess =false ;
+                //Compute the finnish time of the process  
+                int finnishTime = currentTime+1 ;
+                WaitingTime[indexMin] = finnishTime - BurstTime[indexMin] - ArrivalTime[indexMin] ;
+            }
+            //Increment currentTime 
+            currentTime++ ; 
+        }
     }
     //Construct a queu for the processes
     public SJF(int[] a, int[] b,int c ){
-        ArrivalTime = new int[cap] ;   
-        BurstTime  = new int[cap] ;
-        WaitingTime = new int[cap] ;
         this.cap = c ;
-        //Deep coppy all the element  
-        computeGantt() ;
+        this.ArrivalTime = new int[cap] ;   
+        this.BurstTime  = new int[cap] ;
+        for(int i=0;i<c;i++){
+            this.ArrivalTime[i]= a[i] ;
+            this.BurstTime[i] = b[i] ;
+        }
         computeWaitingTime() ;
     }
 
@@ -44,13 +80,18 @@ public class SJF {
      * schedule for the current prorcesses
      * */
     public float computeAvgTime(){
-        return 0 ; 
+        int sum=0 ;
+        for(int i=0;i<this.cap;i++){
+            sum+=WaitingTime[i]; 
+        }
+        return (float) sum/cap ;
     }
     public void displayInfo(){
         System.out.println("Shortest Job First (SJF)");
-        System.out.print("Process\tArrival Time\t Burst Time\tWait Time") ;
+        System.out.println("Process\tArrival\t Burst \tWait") ;
         for(int i=0;i<this.cap;i++){
-            System.out.printf("%d\t%d\t%d\t%f",i,ArrivalTime[i],BurstTime[i],WaitingTime[i]) ;
+            //Display Info here
+            System.out.printf("%d\t%d\t%d\t%d\n",i,ArrivalTime[i],BurstTime[i],WaitingTime[i]) ;
         }
         System.out.println("Average Wait Time:"+this.computeAvgTime()) ;
     }
