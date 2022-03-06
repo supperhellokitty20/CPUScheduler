@@ -1,8 +1,10 @@
 /* Round Robin to determine the average waiting time of  the processes given Arrival Time , Burst Time and Time Quantum   
  *
  * */
+package scheduler ; 
 import java.util.Deque;
 import java.util.LinkedList ; 
+import java.util.Iterator; 
 import java.util.Scanner; 
 public  class RR{
     private int cap ;       
@@ -24,44 +26,40 @@ public  class RR{
         computeWaitTime();
     }
     public void computeWaitTime(){
-       int completed =0;  
-       //This will store all of the index of the next process to work with
-       //The array rmbt will keep track of the remaining time left for the process 
-       int currentTime = 0 ; 
-       int[]  rmbt = new int[cap] ;
-       Deque<Integer> q = new LinkedList<Integer>() ;    
-       for(int i =0;i<this.cap ;i++){
+        //This will store all of the index of the next process to work with
+        //The array rmbt will keep track of the remaining time left for the process 
+        int currentTime = 0 ; 
+        int[]  rmbt = new int[cap] ;
+        Deque<Integer> q = new LinkedList<Integer>() ;    
+        for(int i =0;i<this.cap ;i++){
             rmbt[i] = BurstTime[i]  ;
             q.add(i) ;
-       }
-       while(completed<=cap){
-           for(int i =0;i<this.cap;i++){
-            //Traverse all the process ,avoid  
-               if(ArrivalTime[i]<=currentTime){
-                   //Add the current process to ready qeueu if the process is not already in q 
-                   int j = q.getFirst() ;
-                   //Move the first element to the last element and continue  
-                   if(rmbt[j]>timeQuantum){
-                        currentTime+=timeQuantum ; 
-                        rmbt[i]-=timeQuantum ;
-                        q.removeFirst() ;
-                        q.addLast(j) ;
-                   }else{
-                       //The last cycle for this process
-                       currentTime+=rmbt[j] ;
-                       WaitingTime[j] = currentTime - BurstTime[j] - ArrivalTime[j] ;
-                       completed++ ;
-                       rmbt[j]=0 ; // This process is complete 
-                   }
-               }
-               //If the process does not arrive yet move on with the time
-               else{
-                   currentTime+=timeQuantum ; 
-                   continue; 
-               }
-           }
-       }
-        
+        }
+        while(q.size()>0){
+            int j = q.getFirst();
+            if(ArrivalTime[j]<=currentTime){
+                //Add the current process to ready qeueu if the process is not already in q 
+                //Move the first element to the last element and continue  
+                if(rmbt[j]>timeQuantum){
+                    currentTime+=timeQuantum ; 
+                    rmbt[j]-=timeQuantum ;
+                    q.removeFirst() ;
+                    q.addLast(j) ;
+                }else{
+                    //The last cycle for this process
+                    currentTime+=rmbt[j] ;
+                    WaitingTime[j] = currentTime - BurstTime[j] ;
+                    rmbt[j]=0 ; // This process is complete 
+                    q.removeFirst() ;
+                }
+            }
+            //If the process does not arrive yet move on with the time
+            else{
+                currentTime+=timeQuantum ; 
+                continue; 
+            }
+        }
+
     }
     public float computeAvgTime(){
         int sum=0 ;
@@ -90,14 +88,13 @@ public  class RR{
         int[] burst = {24,3,3  } ; 
         int quant = 4 ; 
         int cap = 3 ;
-        /*The first line of input contain the number of processes in the array 
+        /* TODO: The first line of input contain the number of processes in the array 
          * The second line contain the number of arrival time of each process
          * The third line contain  the number of burst time needed for each process
          * */
         RR scheduler = new RR(arrival,burst,quant,cap)  ;
         scheduler.displayInfo()     ;
-        
-}
+    }
 } 
 
 

@@ -2,6 +2,7 @@
  * and then compute the average waiting time for each processs
  * @author : Tuan Nguyen 
  * */
+package scheduler; 
 public class SJF { 
     /* ArrrivalTime array use to contain the  timestamps on the gantt chart does the process arrive 
      * BurstTime array use to contain the amount it needed to complete the process from the CPU  
