@@ -1,7 +1,6 @@
 /* Round Robin to determine the average waiting time of  the processes given Arrival Time , Burst Time and Time Quantum   
  *
  * */
-package scheduler ; 
 import java.util.Deque;
 import java.util.LinkedList ; 
 import java.util.Iterator; 
@@ -67,6 +66,9 @@ public  class RR{
             sum+=WaitingTime[i]; 
         }
         return (float) sum/cap ;
+    }
+    public int[] getWaittime(){
+        return this.WaitingTime ;
     }
     public void displayInfo(){
         System.out.println("Round Robin (RR)");
