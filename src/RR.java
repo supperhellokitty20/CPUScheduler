@@ -5,7 +5,6 @@ import java.util.Deque;
 import java.util.LinkedList ; 
 import java.util.Iterator; 
 import java.util.Scanner; 
-
 public  class RR{
     private int cap ;       
     private int[] ArrivalTime ;
