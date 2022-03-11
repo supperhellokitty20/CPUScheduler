@@ -172,16 +172,3 @@ public  class RR{
     	}while(cont.equals("y"));
     }
 } 
-
-//Custom Exception for Burst and Arrival
-class NotSameSizeException extends Exception{
-	
-	public NotSameSizeException() {
-		super();
-	}
-	
-	public NotSameSizeException(String s) {
-		super(s);
-	}
-}
-
