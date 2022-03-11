@@ -1,8 +1,11 @@
 /* SJF (Shortest job first) will run the shortest job first, the class compute the waiting time for each process upon initialization 
  * and then compute the average waiting time for each processs
- * @author : Tuan Nguyen 
+ * @author : Tuan Nguyen & Syed Numair Shah
  * */
 package scheduler; 
+
+import java.util.Scanner;
+
 public class SJF { 
     /* ArrrivalTime array use to contain the  timestamps on the gantt chart does the process arrive 
      * BurstTime array use to contain the amount it needed to complete the process from the CPU  
@@ -10,9 +13,40 @@ public class SJF {
     private int[] ArrivalTime; 
     private int[] BurstTime ; 
     private int[] WaitingTime ; 
+    //cap is the length of the arrays, since they are all the same size
     private int cap ; 
+    
     //Gantt chart in the schedule 
 
+    //Construct a queu for the processes
+    public SJF(int[] a, int[] b) throws NotSameSizeException {
+        //Throws exception if a and b are not the same length
+    	if (a.length != b.length) throw new NotSameSizeException("Arrival and Burst don't contain same amount of values");
+    	this.cap = a.length;
+        this.ArrivalTime = new int[cap] ;   
+        this.BurstTime  = new int[cap] ;
+        for(int i=0;i<c;i++){
+            this.ArrivalTime[i]= a[i] ;
+            this.BurstTime[i] = b[i] ;
+        }
+        computeWaitingTime() ;
+    }
+    
+    //Accessor for ArrivalTime array
+    public int[] getArrivalTime() {
+    	return this.ArrivalTime;
+    }
+    
+  //Accessor for BurstTime array
+    public int[] getBurstTime() {
+    	return this.BurstTime;
+    }
+    
+  //Accessor for WaitingTime array
+    public int[] getWaitingTime() {
+    	return this.WaitingTime;
+    }
+    
     /* Compute the wait time for each process   
      * by simulating the gantt chart in 3 arrays 
      * */ 
@@ -65,17 +99,6 @@ public class SJF {
             currentTime++ ; 
         }
     }
-    //Construct a queu for the processes
-    public SJF(int[] a, int[] b,int c ){
-        this.cap = c ;
-        this.ArrivalTime = new int[cap] ;   
-        this.BurstTime  = new int[cap] ;
-        for(int i=0;i<c;i++){
-            this.ArrivalTime[i]= a[i] ;
-            this.BurstTime[i] = b[i] ;
-        }
-        computeWaitingTime() ;
-    }
 
     /*Follow the procedure describe in page 209 compute the gantt 
      * schedule for the current prorcesses
@@ -87,24 +110,88 @@ public class SJF {
         }
         return (float) sum/cap ;
     }
+    
+     /*This method displays the Arrival times, Burst times, 
+     * and Waiting times from the class
+     * */
     public void displayInfo(){
         System.out.println("Shortest Job First (SJF)");
         System.out.println("Process\tArrival\t Burst \tWait") ;
         for(int i=0;i<this.cap;i++){
             //Display Info here
-            System.out.printf("%d\t%d\t%d\t%d\n",i,ArrivalTime[i],BurstTime[i],WaitingTime[i]) ;
+            System.out.printf("%d\t%d\t%d\t%d\n",(i+1),ArrivalTime[i],BurstTime[i],WaitingTime[i]) ;
         }
         System.out.println("Average Wait Time:"+this.computeAvgTime()) ;
     }
+    
+    /*The main method for this class asks the user to input values for
+     * the Arrival and Burst Times and then displays the info. If the arrays
+     * are of different size or does not contain a number, it'll say an error.
+     * The program keeps asking the user to create a new SJF until they say "n"*/
     public static void main( String[] args ){
-        //Get the number from the book 
-        int cap = 4; 
-        int[] arival= {0,1,2,3}  ;
-        int[] burst=  {8,4,9,5} ; 
-        SJF scheduler = new SJF(arival,burst,cap)  ;       
-        scheduler.displayInfo() ;
+         //Get the number from the user
+    	
+    	//Scanner created for user input
+    	Scanner sc = new Scanner(System.in);
+    	
+    	//String for user option at end of loop
+    	String cont;
+    	
+    	System.out.println("-------SJF Program-------");
+    	System.out.println("_______________________________________________________________");
+    	
+    	//Creates a SJF object first time and then loops again and creates a new SJF if the user inputs "y"
+    	do {
+    		//Put a new SJF wont be created if Arrival and Burst are of two different sizes or if a non number value is entered
+	    	try {
+			    System.out.println("Enter Arrival Time (Seperated by commas ,):");
+			    String Atime = sc.nextLine();
+			    String[] AtimeS = Atime.replaceAll(" ", "").split(",");
+			    int[] AtimeN = new int[AtimeS.length];
+			    for (int i = 0; i<AtimeS.length; i++) {AtimeN[i] = Integer.valueOf(AtimeS[i]);}
+			    System.out.println("Enter Burst Time (Seperated by commas ,):");
+			    String Btime = sc.nextLine();
+			    String[] BtimeS = Btime.replaceAll(" ", "").split(",");
+			    int[] BtimeN = new int[BtimeS.length];
+			    for (int i = 0; i<BtimeS.length; i++) {BtimeN[i] = Integer.valueOf(BtimeS[i]);}
+			    SJF scheduler = new SJF(AtimeN, BtimeN);
+			    scheduler.displayInfo();
+	    	}
+	    	//catches exception for if a non number value is passed to Arrival/Burst time
+	    	catch (NumberFormatException e) {
+	    		System.out.println("Arrival Time or Burst Time input had a non number entered!");
+	    	}
+	    	//catches exception if Burst and Arrival don't have the same amount of numbers
+	    	catch (NotSameSizeException e) {
+	    		System.out.println(e.getMessage());
+	    	}
+	    	
+	    	//loops through options until user inputs "y" or "n"
+	    	do {
+	    		//Prints a line to sperate any new SFJ creations
+	    		System.out.println("_______________________________________________________________");
+	    		
+	    		System.out.println("Do you want to create a new test (y/n):");
+	    		//gets user input for the option and makes it lowercase just incase
+	    		cont = sc.nextLine().toLowerCase();
+	    		if (cont.equals("y")) {System.out.println("Enter New Values");}
+	    		else if (cont.equals("n")) {System.out.println("Thank You and Have A Nice Day! :)");}
+	    		else {System.out.println("Not a option, try again!");}
+	    	}while(!cont.equals("y") && !cont.equals("n"));
+	    	
+    	}while(cont.equals("y"));
     }
 }
 
-
+//Custom Exception for Burst and Arrival
+class NotSameSizeException extends Exception{
+	
+	public NotSameSizeException() {
+		super();
+	}
+	
+	public NotSameSizeException(String s) {
+		super(s);
+	}
+}
 
