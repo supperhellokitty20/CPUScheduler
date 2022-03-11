@@ -2,7 +2,6 @@
  * and then compute the average waiting time for each processs
  * @author : Tuan Nguyen & Syed Numair Shah
  * */
-package scheduler; 
 
 import java.util.Scanner;
 
@@ -25,7 +24,7 @@ public class SJF {
     	this.cap = a.length;
         this.ArrivalTime = new int[cap] ;   
         this.BurstTime  = new int[cap] ;
-        for(int i=0;i<c;i++){
+        for(int i=0;i<cap;i++){
             this.ArrivalTime[i]= a[i] ;
             this.BurstTime[i] = b[i] ;
         }
@@ -50,9 +49,6 @@ public class SJF {
     /* Compute the wait time for each process   
      * by simulating the gantt chart in 3 arrays 
      * */ 
-
-    /*Compute each process waititing time 
-     * */
     public void  computeWaitingTime(){
         WaitingTime = new int[cap] ;
         //Store the number of completed process 
@@ -184,6 +180,8 @@ public class SJF {
 }
 
 //Custom Exception for Burst and Arrival
+
+@SuppressWarnings("serial")
 class NotSameSizeException extends Exception{
 	
 	public NotSameSizeException() {
