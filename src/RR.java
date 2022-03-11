@@ -1,18 +1,22 @@
 /* Round Robin to determine the average waiting time of  the processes given Arrival Time , Burst Time and Time Quantum   
- *
+ * @author : Tuan Nguyen & Syed Numair Shah
  * */
 import java.util.Deque;
 import java.util.LinkedList ; 
 import java.util.Iterator; 
 import java.util.Scanner; 
+
 public  class RR{
     private int cap ;       
     private int[] ArrivalTime ;
     private int[] BurstTime ; 
     private int[] WaitingTime; 
     private int timeQuantum ; 
-    public RR(int[] a , int[]b , int quant,int cap){
-        this.cap = cap ;
+    
+    public RR(int[] a , int[]b , int quant) throws NotSameSizeException{
+        //Throws exception if a and b are not the same length
+    	if (a.length != b.length) throw new NotSameSizeException("Arrival and Burst don't contain same amount of values");
+        this.cap = a.length; 
         ArrivalTime = new int[cap] ;
         BurstTime = new int[cap] ;
         WaitingTime = new int[cap] ;
@@ -24,6 +28,27 @@ public  class RR{
         }
         computeWaitTime();
     }
+    
+    //Accessor for ArrivalTime array
+    public int[] getArrivalTime() {
+    	return this.ArrivalTime;
+    }
+    
+  //Accessor for BurstTime array
+    public int[] getBurstTime() {
+    	return this.BurstTime;
+    }
+    
+  //Accessor for WaitingTime array
+    public int[] getWaitingTime() {
+    	return this.WaitingTime;
+    }
+    
+    //Accessor for timeQuantum
+    public int getTimeQuantum() {
+    	return this.timeQuantum;
+    }
+    
     public void computeWaitTime(){
         //This will store all of the index of the next process to work with
         //The array rmbt will keep track of the remaining time left for the process 
@@ -60,6 +85,9 @@ public  class RR{
         }
 
     }
+    
+    /*Computes the average waiting time
+     * */
     public float computeAvgTime(){
         int sum=0 ;
         for(int i=0;i<this.cap;i++){
@@ -67,9 +95,10 @@ public  class RR{
         }
         return (float) sum/cap ;
     }
-    public int[] getWaittime(){
-        return this.WaitingTime ;
-    }
+    
+    /*This method displays the Arrival times, Burst times, 
+     * and Waiting times from the class
+     * */
     public void displayInfo(){
         System.out.println("Round Robin (RR)");
         System.out.println("Process\tArrival\t Burst \tWait") ;
@@ -80,23 +109,79 @@ public  class RR{
         System.out.println("Average Wait Time:"+this.computeAvgTime()) ;
 
     }
+    
+    /*The main method for this class asks the user to input values for
+     * the Arrival, Burst Times, and Quantum Time and then displays the info. If the arrays
+     * are of different size or does not contain a number, it'll say an error.
+     * The program keeps asking the user to create a new RR until they input "n"*/
     public static void main(String args[]){ 
         //The class take line of number as input  
         //and output the resulting table  
-        //TODO: Work on taking user input and handling incorrect input 
-        //While taking the user input make sure that they are sorted upon arrival order
-        //and swap the burst[] accordingly 
-        int[] arrival = {0,1,2} ;
-        int[] burst = {24,3,3  } ; 
-        int quant = 4 ; 
-        int cap = 3 ;
-        /* TODO: The first line of input contain the number of processes in the array 
-         * The second line contain the number of arrival time of each process
-         * The third line contain  the number of burst time needed for each process
-         * */
-        RR scheduler = new RR(arrival,burst,quant,cap)  ;
-        scheduler.displayInfo()     ;
+        //Get the number from the user
+    	
+    	//Scanner created for user input
+    	Scanner sc = new Scanner(System.in);
+    	
+    	//String for user option at end of loop
+    	String cont;
+    	
+    	System.out.println("-------RR Program-------");
+    	System.out.println("_______________________________________________________________");
+    	
+    	//Creates a RR object first time and then loops again and creates a new RR if the user inputs "y"
+    	do {
+    		//Put a new RR wont be created if Arrival and Burst are of two different sizes or if a non number value is entered
+	    	try {
+			    System.out.println("Enter Arrival Time (Seperated by commas ,):");
+			    String Atime = sc.nextLine();
+			    String[] AtimeS = Atime.replaceAll(" ", "").split(",");
+			    int[] AtimeN = new int[AtimeS.length];
+			    for (int i = 0; i<AtimeS.length; i++) {AtimeN[i] = Integer.valueOf(AtimeS[i]);}
+			    System.out.println("Enter Burst Time (Seperated by commas ,):");
+			    String Btime = sc.nextLine();
+			    String[] BtimeS = Btime.replaceAll(" ", "").split(",");
+			    int[] BtimeN = new int[BtimeS.length];
+			    for (int i = 0; i<BtimeS.length; i++) {BtimeN[i] = Integer.valueOf(BtimeS[i]);}
+			    System.out.println("Enter Quantum Number:");
+			    int quant = sc.nextInt();
+			    RR scheduler = new RR(AtimeN, BtimeN, quant);
+			    scheduler.displayInfo();
+	    	}
+	    	//catches exception for if a non number value is passed to Arrival/Burst time
+	    	catch (NumberFormatException e) {
+	    		System.out.println("Arrival Time or Burst Time input had a non number entered!");
+	    	}
+	    	//catches exception if Burst and Arrival don't have the same amount of numbers
+	    	catch (NotSameSizeException e) {
+	    		System.out.println(e.getMessage());
+	    	}
+	    	
+	    	//loops through options until user inputs "y" or "n"
+	    	do {
+	    		//Prints a line to sperate any new RR creations
+	    		System.out.println("_______________________________________________________________");
+	    		
+	    		System.out.println("Do you want to create a new test (y/n):");
+	    		//gets user input for the option and makes it lowercase just incase
+	    		cont = sc.nextLine().toLowerCase();
+	    		if (cont.equals("y")) {System.out.println("Enter New Values");}
+	    		else if (cont.equals("n")) {System.out.println("Thank You and Have A Nice Day! :)");}
+	    		else {System.out.println("Not a option, try again!");}
+	    	}while(!cont.equals("y") && !cont.equals("n"));
+	    	
+    	}while(cont.equals("y"));
     }
 } 
 
+//Custom Exception for Burst and Arrival
+class NotSameSizeException extends Exception{
+	
+	public NotSameSizeException() {
+		super();
+	}
+	
+	public NotSameSizeException(String s) {
+		super(s);
+	}
+}
 
