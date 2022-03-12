@@ -29,6 +29,7 @@ public class SJF {
 		    this.ArrivalTime[i]= a[i] ;
 		    this.BurstTime[i] = b[i] ;
 		}
+		sort(this.ArrivalTime, this.BurstTime, this.cap);
 		computeWaitingTime() ;
 	}
 
