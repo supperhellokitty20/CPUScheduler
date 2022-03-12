@@ -1,6 +1,12 @@
 /* Round Robin to determine the average waiting time of  the processes given Arrival Time , Burst Time and Time Quantum   
  *
  * */
+/* Round Robin to determine the average waiting time of  the processes given Arrival Time , Burst Time and Time Quantum   
+ * @author : Tuan Nguyen & Syed Numair Shah
+ * */
+/* Round Robin to determine the average waiting time of  the processes given Arrival Time , Burst Time and Time Quantum   
+ *
+ * */
 import java.util.Queue;
 import java.util.LinkedList ; 
 import java.util.Scanner; 
@@ -10,19 +16,39 @@ public  class RR{
 	private int[] BurstTime ; 
 	private int[] WaitingTime; 
 	private int timeQuantum ; 
-    private int currentTime  ;
+    	private int currentTime  ;
+    	private void swap( int[] arr, int a ,int b){
+        int x= arr[a] ;
+        arr[a] = arr[b] ;
+        arr[b] = x ; 
+    }
+    //Bubble Sort the arrive time array and burst array accordingly -> O(N) 
+    public void sort( int[] a  , int[] b, int n ){
+        if(n==1){
+            return ; 
+        }
+        for(int i =0 ;i<n-1;i++){
+            if(a[i] > a[i+1]) {
+                swap(a,i,i+1) ;
+                swap(b,i,i+1) ;
+            }
+        }
+        sort(a,b,n-1) ;
+    } 
+
 	public RR(int[] a , int[]b , int quant,int cap){
 		this.cap = cap ;
 		this.ArrivalTime = new int[cap] ;
 		this.BurstTime = new int[cap] ;
 		this.WaitingTime = new int[cap] ;
 		this.timeQuantum  = quant; 
-        this.currentTime = 0;  
+        	this.currentTime = 0;  
 		//Deep coppy the element  
 		for(int i=0;i<this.cap;i++){
 			ArrivalTime[i] = a[i] ;
 			BurstTime[i] = b[i] ;
 		}
+		sort(this.ArrivalTime,this.BurstTime,this.cap) ; 
 		computeWaitTime();
 	}
 
@@ -56,6 +82,10 @@ public  class RR{
 			complete[i] = false ;
 		}
 		//Add the first process index in the queue  
+        //If the first process does not arrive the CPu is idle
+        while(this.currentTime<arrive[0]){
+          this.currentTime++ ;
+        }
 		q.add(0) ;
 		inQ[0] = true ; 
 		while(!q.isEmpty()){
@@ -124,8 +154,8 @@ public  class RR{
 		//TODO: Work on taking user input and handling incorrect input 
 		//While taking the user input make sure that they are sorted upon arrival order
 		//and swap the burst[] accordingly 
-		int[] arrival = {0,0,0} ;
-		int[] burst = {24,3,3  } ; 
+		int[] arrival = {1,2,3} ;
+		int[] burst = {1,2,3} ; 
 		int quant = 4 ; 
 		int cap = 3 ;
 		/* TODO: The first line of input contain the number of processes in the array 
@@ -136,5 +166,8 @@ public  class RR{
 		scheduler.displayInfo()     ;
 	}
 } 
+
+
+
 
 
