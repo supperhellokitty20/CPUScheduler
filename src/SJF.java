@@ -110,14 +110,15 @@ public class SJF {
      /*This method displays the Arrival times, Burst times, 
      * and Waiting times from the class
      * */
-    public void displayInfo(){
-        System.out.println("Shortest Job First (SJF)");
-        System.out.println("Process\tArrival\t Burst \tWait") ;
+    public String displayInfo(){
+        String info = "Shortest Job First (SJF)\n";
+        info += "Process\tArrival\t Burst \tWait\n";
         for(int i=0;i<this.cap;i++){
             //Display Info here
-            System.out.printf("%d\t%d\t%d\t%d\n",(i+1),ArrivalTime[i],BurstTime[i],WaitingTime[i]) ;
+            info += String.format("%d\t%d\t%d\t%d\n",(i+1),ArrivalTime[i],BurstTime[i],WaitingTime[i]) ;
         }
-        System.out.println("Average Wait Time:"+this.computeAvgTime()) ;
+        info += ("Average Wait Time:"+this.computeAvgTime()) ;
+	return info;
     }
     
     /*The main method for this class asks the user to input values for
@@ -151,7 +152,7 @@ public class SJF {
 			    int[] BtimeN = new int[BtimeS.length];
 			    for (int i = 0; i<BtimeS.length; i++) {BtimeN[i] = Integer.valueOf(BtimeS[i]);}
 			    SJF scheduler = new SJF(AtimeN, BtimeN);
-			    scheduler.displayInfo();
+			    System.out.println(scheduler.displayInfo());
 	    	}
 	    	//catches exception for if a non number value is passed to Arrival/Burst time
 	    	catch (NumberFormatException e) {
