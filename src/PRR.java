@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 // http://www.henrikfrank.dk/abaptips/javaforsap/javabasics/calling_class_i_another_file.htm
+//
 public class PRR {
     private int cap;
     private int[] ArrivalTime;
@@ -18,8 +18,23 @@ public class PRR {
     private int currentTime;
     /* Sort the process in term of arrival time 
      * */
-    private void sort(){
-
+    private void swap( int[] arr, int a ,int b){
+        int x= arr[a] ;
+        arr[a] = arr[b] ;
+        arr[b] = x ; 
+    }
+    //Bubble Sort the arrive time array and burst array accordingly -> O(N) 
+    public void sort( int[] a  , int[] b, int n ){
+        if(n==1){
+            return ; 
+        }
+        for(int i =0 ;i<n-1;i++){
+            if(a[i] > a[i+1]) {
+                swap(a,i,i+1) ;
+                swap(b,i,i+1) ;
+            }
+        }
+        sort(a,b,n-1) ;
     } 
     public PRR(int[] a, int[] b, int[] prio, int quant, int cap) {
         this.cap = cap;
@@ -35,8 +50,8 @@ public class PRR {
             BurstTime[i] = b[i];
             Priority[i] = prio[i];
         }
-        //Sort the process in term of arrival time 
-        sort() ;
+        //Sort the process in term of arrival time also swapping the location of elements in BurstTime accordingly  
+        sort( ArrivalTime ,BurstTime,quant ) ;
         computeWaitTime();
     }
     private void  checkArrival( Queue<Integer> q , int[] arrive,boolean[] inQ,boolean[] complete) {
@@ -186,7 +201,7 @@ public class PRR {
 
     public static void main(String args[]) {
         //With this test case arrive time is sorted 
-        int[] arrive = { 0, 0, 0, 0, 0 };
+        int[] arrive = {5,3,2,4,1};
         int[] burst = { 4, 5, 8, 7, 3 };
         int[] prio = { 3, 2, 2, 1, 3 };
         int q = 4;
