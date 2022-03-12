@@ -162,14 +162,15 @@ public class PRR{
      /*This method displays the Arrival times, Burst times, 
      * and Waiting times from the class
      * */
-    public void displayInfo(){
-        System.out.println("Round Robin (RR)");
-        System.out.println("Process\tArrival\tBurst\tPrio\tWait") ;
+    public String displayInfo(){
+	    String info = "";
+        info += "Round Robin (PRR)\n";
+        info += "Process\tArrival\tBurst\tPrio\tWait\n" ;
         for(int i=0;i<this.cap;i++){
             //Display Info here
-            System.out.printf("%d\t%d\t%d\t%d\t%d\n",(i+1),ArrivalTime[i],BurstTime[i],Priority[i],WaitingTime[i]) ;
+           info += String.format("%d\t%d\t%d\t%d\t%d\n",(i+1),ArrivalTime[i],BurstTime[i],Priority[i],WaitingTime[i]) ;
         }
-        System.out.println("Average Wait Time:"+this.computeAvgTime()) ;
+       info += ("Average Wait Time:"+this.computeAvgTime()) ;
 
     }
     
@@ -213,9 +214,9 @@ public class PRR{
 			    int[] PrioN = new int[PrioS.length];
 			    for (int i = 0; i<PrioS.length; i++) {PrioN[i] = Integer.valueOf(PrioS[i]);}
 			    System.out.println("Enter Quantum Number:");
-			    int quant = sc.nextInt();
+			    int quant = Integer.valueOf(sc.nextLine());
 			    PRR scheduler = new PRR(AtimeN, BtimeN, PrioN, quant);
-			    scheduler.displayInfo();
+			    System.ot.println(scheduler.displayInfo());
 	    	}
 	    	//catches exception for if a non number value is passed to Arrival/Burst time
 	    	catch (NumberFormatException e) {
