@@ -99,15 +99,16 @@ public  class RR{
     /*This method displays the Arrival times, Burst times, 
      * and Waiting times from the class
      * */
-    public void displayInfo(){
-        System.out.println("Round Robin (RR)");
-        System.out.println("Process\tArrival\t Burst \tWait") ;
+    public String displayInfo(){
+	String info = "";
+        info += "Round Robin (RR)\n";
+        info += "s\tArrival\t Burst \tWait\n" ;
         for(int i=0;i<this.cap;i++){
             //Display Info here
-            System.out.printf("%d\t%d\t%d\t%d\n",i,ArrivalTime[i],BurstTime[i],WaitingTime[i]) ;
+            info += String.format("%d\t%d\t%d\t%d\n",i,ArrivalTime[i],BurstTime[i],WaitingTime[i]) ;
         }
-        System.out.println("Average Wait Time:"+this.computeAvgTime()) ;
-
+        info += ("Average Wait Time:"+this.computeAvgTime()) ;
+	return info;
     }
     
     /*The main method for this class asks the user to input values for
@@ -143,9 +144,9 @@ public  class RR{
 			    int[] BtimeN = new int[BtimeS.length];
 			    for (int i = 0; i<BtimeS.length; i++) {BtimeN[i] = Integer.valueOf(BtimeS[i]);}
 			    System.out.println("Enter Quantum Number:");
-			    int quant = sc.nextInt();
+			    int quant = Integer.valueOf(sc.nextLine());
 			    RR scheduler = new RR(AtimeN, BtimeN, quant);
-			    scheduler.displayInfo();
+			    System.out.println(scheduler.displayInfo());
 	    	}
 	    	//catches exception for if a non number value is passed to Arrival/Burst time
 	    	catch (NumberFormatException e) {
