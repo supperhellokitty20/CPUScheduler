@@ -227,8 +227,19 @@ public  class RR{
 	
 	//swaps index a with index b within a given int array
 	private void swap( int[] arr, int a ,int b){
-        int x= arr[a] ;
-        arr[a] = arr[b] ;
-        arr[b] = x ; 
+		int x= arr[a] ;
+		arr[a] = arr[b] ;
+		arr[b] = x ; 
     	}
+	
+	//Helper method for the computeWaitingTime method
+	private void  checkArrival( Queue<Integer> q , int[] arrive,boolean[] inQ,boolean[] complete) {
+		int n = arrive.length  ;
+		for(int i=0;i<n;i++){
+			if(arrive[i] <=this.currentTime && !inQ[i] && !complete[i]) {
+				q.add(i);  
+				inQ[i]= true ;
+			}
+		}
+	}
 } 
