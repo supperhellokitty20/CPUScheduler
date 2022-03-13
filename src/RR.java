@@ -43,28 +43,28 @@ public  class RR{
     	}
     
     	/* Accessor for ArrivalTime array
-     	* @return This returns the ArrivalTime array
+     	* @return int[] This returns the ArrivalTime array
      	* */
     	public int[] getArrivalTime() {
     		return this.ArrivalTime;
    	 }
     
   	/* Accessor for BurstTime array
-     	* @return This returns the BurstTime array
+     	* @return int[] This returns the BurstTime array
      	* */
     	public int[] getBurstTime() {
     		return this.BurstTime;
     	}
     
   	/* Accessor for WaitingTime array
-     	* @return This returns the WaitingTime array
+     	* @return int[] This returns the WaitingTime array
      	* */
     	public int[] getWaitingTime() {
     		return this.WaitingTime;
     	}
     
     	/* Accessor for the timeQuantum int
-     	* @return This returns the timeQuantum
+     	* @return int This returns the timeQuantum
      	* */
     	public int getTimeQuantum() {
     		return this.timeQuantum;
@@ -137,6 +137,7 @@ public  class RR{
     	}
     
 	/*Computes the average waiting time
+	* @return float this returns the avarage of all the classes waitingTime
 	* */
 	public float computeAvgTime(){
 		int sum=0 ;
@@ -148,7 +149,7 @@ public  class RR{
     
 	/*This method displays the Arrival times, Burst times, 
     	* and Waiting times from the class
-    	* @return This returns a string that holds all the information from this class
+    	* @return String This returns a string that holds all the information from this class
     	* */
 	public String displayInfo(){
 		String info = "";
