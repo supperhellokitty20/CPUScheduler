@@ -38,21 +38,21 @@ public class SJF {
 	}
 
 	/* Accessor for ArrivalTime array
-     	* @return This returns the ArrivalTime array
+     	* @return int[] This returns the ArrivalTime array
      	* */
 	public int[] getArrivalTime() {
 		return this.ArrivalTime;
 	}
 
 	/* Accessor for BurstTime array
-     	* @return This returns the BurstTime array
+     	* @return int[] This returns the BurstTime array
      	* */
 	public int[] getBurstTime() {
 		return this.BurstTime;
 	}
 
 	/* Accessor for WaitingTime array
-     	* @return This returns the WaitingTime array
+     	* @return int[] This returns the WaitingTime array
      	* */
 	public int[] getWaitingTime() {
 		return this.WaitingTime;
@@ -108,8 +108,8 @@ public class SJF {
 		}
 	}
 
-	/*Follow the procedure describe in page 209 compute the gantt 
-	* schedule for the current prorcesses
+	/*Computes the average waiting time
+	* @return float this returns the avarage of all the classes waitingTime
 	* */
 	public float computeAvgTime(){
 		int sum=0 ;
@@ -121,7 +121,7 @@ public class SJF {
 
 	/*This method displays the Arrival times, Burst times, 
     	* and Waiting times from the class
-    	* @return This returns a string that holds all the information from this class
+    	* @return String This returns a string that holds all the information from this class
     	* */
 	public String displayInfo(){
 		String info = "Shortest Job First (SJF)\n";
