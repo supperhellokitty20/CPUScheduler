@@ -215,7 +215,7 @@ public class PRR{
 		for(int i=0;i<this.cap;i++){
 		    sum+=WaitingTime[i]; 
 		}
-		return (float) sum/cap 
+		return (float) sum/cap ;
 	}
     
 	/*This method displays the Arrival times, Burst times, 
