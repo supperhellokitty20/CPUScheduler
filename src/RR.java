@@ -137,10 +137,10 @@ public  class RR{
 	public String displayInfo(){
 		String info = "";
 		info += "Round Robin (RR)\n";
-		info += "s\tArrival\t Burst \tWait\n" ;
+		info += "Process\tArrival\t Burst \tWait\n" ;
 		for(int i=0;i<this.cap;i++){
 		    //Display Info here
-		    info += String.format("%d\t%d\t%d\t%d\n",i,ArrivalTime[i],BurstTime[i],WaitingTime[i]) ;
+		    info += String.format("%d\t%d\t%d\t%d\n",(i+1),ArrivalTime[i],BurstTime[i],WaitingTime[i]) ;
 		}
 		info += ("Average Wait Time:"+this.computeAvgTime()) ;
 		return info;
