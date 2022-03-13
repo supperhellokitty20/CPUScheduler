@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.Scanner;
 
 // http://www.henrikfrank.dk/abaptips/javaforsap/javabasics/calling_class_i_another_file.htm
 public class PRR{
@@ -176,7 +177,7 @@ public class PRR{
 			burstPrio[i] = BurstTime[prioIndex.get(i)] ;
 		    }
 		    // Start an RR schedule on the processes ,keep updating the currentTime  
-		    int[] wait = roundRobin(arrivalPrio,burstPrio,currentTime,this.quant) ;
+		    int[] wait = roundRobin(arrivalPrio,burstPrio,this.quant) ;
 		    // Update the wait time of process based on the index proivided in prioIndex
 		    // that store the index of processes that have the same priority
 		    for(int i =0;i<wait.length;i++){ 
@@ -252,7 +253,7 @@ public class PRR{
 				    System.out.println("Enter Quantum Number:");
 				    int quant = Integer.valueOf(sc.nextLine());
 				    PRR scheduler = new PRR(AtimeN, BtimeN, PrioN, quant);
-				    System.ot.println(scheduler.displayInfo());
+				    System.out.println(scheduler.displayInfo());
 			}
 			//catches exception for if a non number value is passed to Arrival/Burst time
 			catch (NumberFormatException e) {
