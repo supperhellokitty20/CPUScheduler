@@ -36,6 +36,8 @@ public  class RR{
 		    ArrivalTime[i] = a[i] ;
 		    BurstTime[i] = b[i] ;
 		}
+		
+		//Sort the process in term of arrival time also swapping the location of elements in BurstTime accordingly
 		sort(this.ArrivalTime,this.BurstTime, this.cap);
 		computeWaitTime();
     	}
