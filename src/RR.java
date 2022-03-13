@@ -16,7 +16,12 @@ public  class RR{
     	private int timeQuantum ;
 	private int currentTime;
 	
-    	//Constructor for the RR class
+    	/* Constructor for RR class
+     	* @param a this holds the array that sets ArrivalTime
+     	* @param b this holds the array that sets BurstTime
+	* @param quant this holds int value for the timeQuantum
+     	* @throws NotSameSizeException based on if both parameters are not the same size
+     	* */
     	public RR(int[] a , int[]b , int quant) throws NotSameSizeException{
         	//Throws exception if a and b are not the same length
 		if (a.length != b.length) throw new NotSameSizeException("Arrival and Burst don't contain same amount of values");
@@ -35,22 +40,30 @@ public  class RR{
 		computeWaitTime();
     	}
     
-    	//Accessor for ArrivalTime array
+    	/* Accessor for ArrivalTime array
+     	* @return This returns the ArrivalTime array
+     	* */
     	public int[] getArrivalTime() {
     		return this.ArrivalTime;
    	 }
     
-  	//Accessor for BurstTime array
+  	/* Accessor for BurstTime array
+     	* @return This returns the BurstTime array
+     	* */
     	public int[] getBurstTime() {
     		return this.BurstTime;
     	}
     
-  	//Accessor for WaitingTime array
+  	/* Accessor for WaitingTime array
+     	* @return This returns the WaitingTime array
+     	* */
     	public int[] getWaitingTime() {
     		return this.WaitingTime;
     	}
     
-    	//Accessor for timeQuantum
+    	/* Accessor for the timeQuantum int
+     	* @return This returns the timeQuantum
+     	* */
     	public int getTimeQuantum() {
     		return this.timeQuantum;
     	}
@@ -132,8 +145,9 @@ public  class RR{
 	}
     
 	/*This method displays the Arrival times, Burst times, 
-	* and Waiting times from the class
-	* */
+    	* and Waiting times from the class
+    	* @return This returns a string that holds all the information from this class
+    	* */
 	public String displayInfo(){
 		String info = "";
 		info += "Round Robin (RR)\n";
@@ -149,7 +163,11 @@ public  class RR{
 	/*The main method for this class asks the user to input values for
 	* the Arrival, Burst Times, and Quantum Time and then displays the info. If the arrays
 	* are of different size or does not contain a number, it'll say an error.
-	* The program keeps asking the user to create a new RR until they input "n"*/
+	* The program keeps asking the user to create a new RR until they input "n"
+	* @param args unused
+	* @exception NumberFormatException is caught if one of the values given in the arrays/quant is not a number
+	* @exception NotSameSizeException is caught if the two arrays given by the user are not the same size
+	* */
 	public static void main(String args[]){ 
 		//The class take line of number as input  
 		//and output the resulting table  
@@ -208,9 +226,13 @@ public  class RR{
 		}while(cont.equals("y"));
 	}
 	
-	//Helper Mehods
+	//Helper Methods
 
-	//Bubble Sort the arrive time array and burst array accordingly -> O(N) 
+	/* Bubble Sort the arrive time array and burst array accordingly -> O(N)
+     	* @param a first array that would be sorted on by accenting order
+     	* @param b this array is sorted based on the first array
+     	* @param n the size of both given array
+     	* */ 
 	public void sort( int[] a  , int[] b, int n ){
 		if(n==1){
 		    return ; 
@@ -224,14 +246,23 @@ public  class RR{
 		sort(a,b,n-1) ;
 	}
 	
-	//swaps index a with index b within a given int array
+	/* swaps index a with index b within a given int array
+     	* @param arr the given array
+     	* @param a the first index to switch with
+     	* @param b the second index to switch with index a
+     	* */
 	private void swap( int[] arr, int a ,int b){
 		int x= arr[a] ;
 		arr[a] = arr[b] ;
 		arr[b] = x ; 
     	}
 	
-	//Helper method for the computeWaitingTime method
+	/* Helper method for the computeWaitingTime method
+     	* @param q holds the Queue for int values
+     	* @param arrive holds all the arrival times in the int array
+     	* @param inQ holds the boolean array for if its each process is in queue
+	* @param complete holds boolean array for if each process has completed
+     	* */
 	private void  checkArrival( Queue<Integer> q , int[] arrive,boolean[] inQ,boolean[] complete) {
 		int n = arrive.length  ;
 		for(int i=0;i<n;i++){
