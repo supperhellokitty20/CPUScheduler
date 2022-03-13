@@ -52,7 +52,7 @@ public class PRR{
 		}
 		
 		//Sort the process in term of arrival time also swapping the location of elements in BurstTime accordingly  
-		sort( this.ArrivalTime ,this.BurstTime,this.Priority,this.quant ) ;
+		sort( this.ArrivalTime ,this.BurstTime,this.Priority,this.cap ) ;
 		computeWaitTime();
 	} 
 
