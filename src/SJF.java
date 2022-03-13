@@ -33,6 +33,8 @@ public class SJF {
 		    this.ArrivalTime[i]= a[i] ;
 		    this.BurstTime[i] = b[i] ;
 		}
+		
+		//Sort the process in term of arrival time also swapping the location of elements in BurstTime accordingly
 		sort(this.ArrivalTime, this.BurstTime, this.cap);
 		computeWaitingTime() ;
 	}
