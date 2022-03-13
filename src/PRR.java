@@ -16,7 +16,9 @@ import java.util.Scanner;
 // http://www.henrikfrank.dk/abaptips/javaforsap/javabasics/calling_class_i_another_file.htm
 public class PRR{
     
-	private int cap ;       
+	//cap holds the lengths for all arrays
+	private int cap ;
+	
 	private int[] ArrivalTime ;
 	private int[] BurstTime ; 
 	private int[] WaitingTime; 
@@ -24,7 +26,13 @@ public class PRR{
 	private int quant; 
 	private int currentTime; 
     
-	//Constructor for class PRR
+	/* Constructor for PRR class
+     	* @param a this holds the array that sets ArrivalTime
+     	* @param b this holds the array that sets BurstTime
+	* @param prio holds the array that sets Priority
+	* @param quant this holds int value for quant
+     	* @throws NotSameSizeException based on if both parameters are not the same size
+     	* */
 	public PRR(int[]a ,int[] b,int[] prio, int quant) throws NotSameSizeException {
 		//Throws exception if a and b and prio are not the same length
 		if (a.length != b.length || b.length != prio.length || prio.length != a.length) throw new NotSameSizeException("Arrival and Burst or/and Priority don't contain same amount of values");
@@ -48,36 +56,49 @@ public class PRR{
 		computeWaitTime();
 	} 
 
-	//Accessor for ArrivalTime array
+	/* Accessor for ArrivalTime array
+     	* @return int[] This returns the ArrivalTime array
+     	* */
 	public int[] getArrivalTime() {
 		return this.ArrivalTime;
 	}
 
-	//Accessor for BurstTime array
+	/* Accessor for BurstTime array
+     	* @return int[] This returns the BurstTime array
+     	* */
 	public int[] getBurstTime() {
 		return this.BurstTime;
 	}
 
-	//Accessor for Priority array
+	/* Accessor for the Priority array
+     	* @return int[] This returns the Priority array
+     	* */
 	public int[] getPriority() {
 		return this.Priority;
 	}
 
-	//Accessor for WaitingTime array
+	/* Accessor for WaitingTime array
+     	* @return int[] This returns the WaitingTime array
+     	* */
 	public int[] getWaitingTime() {
 		return this.WaitingTime;
 	}
 
-	//Accessor for timeQuantum
+	/* Accessor for the quant int
+     	* @return int This returns the quant
+     	* */
 	public int getTimeQuantum() {
 		return this.quant;
 	}
     
-	/*
-	* Run a round robin schedule on the processes,calculating the wait time in the
+	/* Run a round robin schedule on the processes,calculating the wait time in the
 	* processes
-	* @precondition :The function assumes that arrive time is sorted in ascending orer  
-	*/
+	* @precondition :The function assumes that arrive time is sorted in ascending orer
+	* @param arrive this holds the array for when each process arrives
+	* @param burst this holds the array for each burst int value
+	* @param quant this holds the int value for the time Quantum
+	* @return int[] this returns the wait time for the given values
+	* */
 	private int[] roundRobin(int[] arrive, int[] burst, int quant) {
 		int n = burst.length; 
 		int[] wait = new int[n];
@@ -187,6 +208,7 @@ public class PRR{
 	}
     
 	/*Computes the average waiting time
+	* @return float this returns the avarage of all the classes waitingTime
 	* */
 	public float computeAvgTime(){
 		int sum=0 ;
@@ -197,8 +219,9 @@ public class PRR{
 	}
     
 	/*This method displays the Arrival times, Burst times, 
-	* and Waiting times from the class
-	* */
+    	* Priorities, and Waiting times from the class
+    	* @return String This returns a string that holds all the information from this class
+    	* */
 	public String displayInfo(){
 		String info = "";
 		info += "Round Robin (PRR)\n";
@@ -216,6 +239,9 @@ public class PRR{
 	* displays the info. If the arrays are of different size or does 
 	* not contain a number, it'll say an error.
 	* The program keeps asking the user to create a new PRR until they say "n"
+	* @param args unused
+	* @exception NumberFormatException is caught if one of the values given in the arrays/quant is not a number
+	* @exception NotSameSizeException is caught if the two arrays given by the user are not the same size
 	* */
 	public static void main(String args[]){
 		//The class take line of number as input  
@@ -282,15 +308,22 @@ public class PRR{
 	
 	//Helper Methods
 	
-	/* Sort the process in term of arrival time 
-	* */
+	/* swaps index a with index b within a given int array
+     	* @param arr the given array
+     	* @param a the first index to switch with
+     	* @param b the second index to switch with index a
+     	* */
 	private void swap( int[] arr, int a ,int b){
 		int x= arr[a] ;
 		arr[a] = arr[b] ;
 		arr[b] = x ; 
 	}
 	
-	//Bubble Sort the arrive time array and burst array accordingly -> O(N) 
+	/* Bubble Sort the arrive time array and burst array accordingly -> O(N)
+     	* @param a first array that would be sorted on by accenting order
+     	* @param b this array is sorted based on the first array
+     	* @param n the size of both given array
+     	* */ 
 	public void sort( int[] a  , int[] b, int n ){
 		if(n==1){
 		    return ; 
@@ -304,7 +337,12 @@ public class PRR{
 		sort(a,b,n-1) ;
 	}
 	
-	//Helper Method for the roundRobin method
+	/* Helper Method for the roundRobin method
+	* @param q holds the Queue for int values
+     	* @param arrive holds all the arrival times in the int array
+     	* @param inQ holds the boolean array for if its each process is in queue
+	* @param complete holds boolean array for if each process has completed
+     	* */
 	private void  checkArrival( Queue<Integer> q , int[] arrive,boolean[] inQ,boolean[] complete) {
 		int n = arrive.length  ;
 		for(int i=0;i<n;i++){
