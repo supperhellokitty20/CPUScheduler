@@ -18,7 +18,11 @@ public class SJF {
 
 	//Gantt chart in the schedule 
 
-	//Construct a queu for the processes
+	/* Construct a queu for the processes
+     	* @param a this holds the array that sets ArrivalTime
+     	* @param b this holds the array that sets BurstTime
+     	* @throws NotSameSizeException based on if both parameters are not the same size
+     	* */
 	public SJF(int[] a, int[] b) throws NotSameSizeException {
 		//Throws exception if a and b are not the same length
 		if (a.length != b.length) throw new NotSameSizeException("Arrival and Burst don't contain same amount of values");
@@ -33,17 +37,23 @@ public class SJF {
 		computeWaitingTime() ;
 	}
 
-	//Accessor for ArrivalTime array
+	/* Accessor for ArrivalTime array
+     	* @return This returns the ArrivalTime array
+     	* */
 	public int[] getArrivalTime() {
 		return this.ArrivalTime;
 	}
 
-	//Accessor for BurstTime array
+	/* Accessor for BurstTime array
+     	* @return This returns the BurstTime array
+     	* */
 	public int[] getBurstTime() {
 		return this.BurstTime;
 	}
 
-	//Accessor for WaitingTime array
+	/* Accessor for WaitingTime array
+     	* @return This returns the WaitingTime array
+     	* */
 	public int[] getWaitingTime() {
 		return this.WaitingTime;
 	}
@@ -110,8 +120,9 @@ public class SJF {
 	}
 
 	/*This method displays the Arrival times, Burst times, 
-	* and Waiting times from the class
-	* */
+    	* and Waiting times from the class
+    	* @return This returns a string that holds all the information from this class
+    	* */
 	public String displayInfo(){
 		String info = "Shortest Job First (SJF)\n";
 		info += "Process\tArrival\t Burst \tWait\n";
@@ -126,7 +137,9 @@ public class SJF {
 	/*The main method for this class asks the user to input values for
 	* the Arrival and Burst Times and then displays the info. If the arrays
 	* are of different size or does not contain a number, it'll say an error.
-	* The program keeps asking the user to create a new SJF until they say "n"*/
+	* The program keeps asking the user to create a new SJF until they say "n"
+	* @param args unused
+	* */
 	public static void main( String[] args ){
 		 //Get the number from the user
 
@@ -181,9 +194,13 @@ public class SJF {
 		}while(cont.equals("y"));
 	}
 	
-	//Helper Mehods
+	//Helper Methods
 
-	//Bubble Sort the arrive time array and burst array accordingly -> O(N) 
+	/* Bubble Sort the arrive time array and burst array accordingly -> O(N)
+     	* @param a first array that would be sorted on by accenting order
+     	* @param b this array is sorted based on the first array
+     	* @param n the size of both given array
+     	* */ 
 	public void sort( int[] a  , int[] b, int n ){
 		if(n==1){
 		    return ; 
@@ -197,7 +214,11 @@ public class SJF {
 		sort(a,b,n-1) ;
 	}
 	
-	//swaps index a with index b within a given int array
+	/* swaps index a with index b within a given int array
+     	* @param arr the given array
+     	* @param a the first index to switch with
+     	* @param b the second index to switch with index a
+     	* */
 	private void swap( int[] arr, int a ,int b){
 		int x= arr[a] ;
 		arr[a] = arr[b] ;
