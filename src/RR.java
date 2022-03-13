@@ -62,7 +62,7 @@ public  class RR{
     	public void computeWaitTime(){
         	//This will store all of the index of the next process to work with
         	//The array rmbt will keep track of the remaining time left for the process 
-       		int n = burst.length; 
+       		int n = this.cap; 
 		int[] wait = new int[n];
 		int[] rmbt = new int[n];
 		int[] timeCompleted = new int[n] ; 
@@ -72,13 +72,13 @@ public  class RR{
 		boolean[] inQ =  new boolean[n];
 
 		for(int i=0;i< n;i++){
-			rmbt[i]= burst[i] ;
+			rmbt[i]= this.BurstTime[i] ;
 			//Initialize all the compete as false 
 			complete[i] = false ;
 		}
 		//Add the first process index in the queue  
         	//If the first process does not arrive the CPu is idle
-        	while(this.currentTime<arrive[0]){
+        	while(this.currentTime<this.ArrivalTime[0]){
           		this.currentTime++ ;
         	}
 		q.add(0) ;
@@ -89,11 +89,11 @@ public  class RR{
 
 			/* The process will be complete in this time quantum , proceed to calculate the waiting time of the process  
 			 * */
-			if( rmbt[j]<=quant ) { 
+			if( rmbt[j]<=this.timeQuantum ) { 
 				complete[j]  = true ;
 				this.currentTime+= rmbt[j]  ;
 				timeCompleted[j]  = currentTime ;  
-				wait[j] = timeCompleted[j]-arrive[j]-burst[j] ;
+				wait[j] = timeCompleted[j]-this.ArrivalTime[j]-this.BurstTime[j] ;
 				if(wait[j]<0) wait[j] =0 ; 
 				rmbt[j] =0; 
 				countDone++ ;
@@ -101,18 +101,18 @@ public  class RR{
 				if(countDone!=n){
 					//Check for new process to arrive in the Queue update the q  
 					//checkArrival( ) ;
-					checkArrival(q,arrive,inQ,complete)  ;
+					checkArrival(q,this.ArrivalTime,inQ,complete)  ;
 				}
 			}
 			/* The process doesn't finnish in this time quantum  
 			 * */
 			else{
-				rmbt[j] -=quant ;
-				this.currentTime+= quant ;
+				rmbt[j] -=this.timeQuantum ;
+				this.currentTime+= this.timeQuantum ;
 				if(countDone!=n){
 					//Check new arrival
 					//checkArrival() ;
-					checkArrival(q,arrive,inQ,complete)  ;
+					checkArrival(q,this.ArrivalTime,inQ,complete)  ;
 				}
 				//Push the incomplete process to the end of the queue 
 				q.add(j) ;
