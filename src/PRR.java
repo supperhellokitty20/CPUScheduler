@@ -37,22 +37,22 @@ public class PRR{
 		//Throws exception if a and b and prio are not the same length
 		if (a.length != b.length || b.length != prio.length || prio.length != a.length) throw new NotSameSizeException("Arrival and Burst or/and Priority don't contain same amount of values");
 		this.cap = a.length;
-		ArrivalTime = new int[cap] ;
-		BurstTime = new int[cap] ;
-		WaitingTime = new int[cap] ;
-		Priority = new int[cap] ;
+		this.ArrivalTime = new int[cap] ;
+		this.BurstTime = new int[cap] ;
+		this.WaitingTime = new int[cap] ;
+		this.Priority = new int[cap] ;
 		this.quant = quant; 
 		this.currentTime= 0; 
 		
 		//Deep coppy the element  
 		for(int i=0;i<this.cap;i++){
-		    ArrivalTime[i] = a[i] ;
-		    BurstTime[i] = b[i] ;
-		    Priority[i] = prio[i]; 
+		    this.ArrivalTime[i] = a[i] ;
+		    this.BurstTime[i] = b[i] ;
+		    this.Priority[i] = prio[i]; 
 		}
 		
 		//Sort the process in term of arrival time also swapping the location of elements in BurstTime accordingly  
-		sort( ArrivalTime ,BurstTime,quant ) ;
+		sort( this.ArrivalTime ,this.BurstTime,this.Priority,this.quant ) ;
 		computeWaitTime();
 	} 
 
@@ -324,7 +324,7 @@ public class PRR{
      	* @param b this array is sorted based on the first array
      	* @param n the size of both given array
      	* */ 
-	public void sort( int[] a  , int[] b, int n ){
+	public void sort( int[] a  , int[] b, int[] c, int n ){
 		if(n==1){
 		    return ; 
 		}
@@ -332,9 +332,10 @@ public class PRR{
 		    if(a[i] > a[i+1]) {
 			swap(a,i,i+1) ;
 			swap(b,i,i+1) ;
+			swap(c,i,i+1);
 		    }
 		}
-		sort(a,b,n-1) ;
+		sort(a,b,c,n-1) ;
 	}
 	
 	/* Helper Method for the roundRobin method
