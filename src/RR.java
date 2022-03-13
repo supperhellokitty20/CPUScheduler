@@ -1,9 +1,8 @@
 /* Round Robin to determine the average waiting time of  the processes given Arrival Time , Burst Time and Time Quantum   
  * @author : Tuan Nguyen & Syed Numair Shah
  * */
-import java.util.Deque;
+import java.util.Queue;
 import java.util.LinkedList ; 
-import java.util.Iterator; 
 import java.util.Scanner; 
 
 public  class RR{
