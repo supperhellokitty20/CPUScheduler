@@ -139,6 +139,8 @@ public class SJF {
 	* are of different size or does not contain a number, it'll say an error.
 	* The program keeps asking the user to create a new SJF until they say "n"
 	* @param args unused
+	* @exception NumberFormatException is caught if one of the values given in the arrays/quant is not a number
+	* @exception NotSameSizeException is caught if the two arrays given by the user are not the same size
 	* */
 	public static void main( String[] args ){
 		 //Get the number from the user
